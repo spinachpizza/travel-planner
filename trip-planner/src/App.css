@@ -1,0 +1,42 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 500px;
+  width: 1000px;
+  overflow-y: none;
+}
+
+.main-edit-button-container {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  height: 75px;
+  width: 75px;
+  border: 1px solid #242424;
+  border-radius: 50px;
+  cursor: pointer;
+  background-color: rgb(44, 44, 44);
+}
+.main-edit-button-container:hover {
+  background-color: rgb(66, 66, 66);
+}
+
+.edit-menu-container {
+  width: 300px;
+  height: 750px;
+  border: 2px solid grey;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+}
