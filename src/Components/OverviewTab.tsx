@@ -1,5 +1,5 @@
 import { useState } from "react";
-import '../app.css'
+import '../App.css'
 import type { BoxData } from "./TravelStepBox";
 import { costRowTypes } from "../Constants/Constants";
 import TitleAndContent from "./TitleAndContent";
