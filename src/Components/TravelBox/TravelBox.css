@@ -11,7 +11,7 @@
     margin-bottom: 50px;
     margin-left: 20px;
     width: 450px;
-    border: 2px solid grey;
+    border: 3px solid grey;
     border-radius: 20px;
     background-color: #242424;
 }
@@ -39,7 +39,7 @@
     justify-content: flex-start;
     align-items: center;
     width: 100%;
-    border-bottom: 1px solid grey;
+    border-bottom: 2px solid grey;
 }
 
 .box-row-title {
@@ -51,7 +51,7 @@
     min-width: 150px;
     height: 100%;
     min-height: 60px;
-    border-right: 1px solid grey;
+    border-right: 2px solid grey;
 }
 
 .title-box-row-title p,

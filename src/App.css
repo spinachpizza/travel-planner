@@ -10,9 +10,78 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 500px;
+  margin-bottom: 50px;
   width: 1000px;
   overflow-y: none;
+  background-color: #202020;
+}
+
+.sunken {
+  box-shadow: inset 5px 5px 15px #121212, inset -5px -5px 15px #121212;
+  border-radius: 10px;
+  width: 1100px;
+  padding-top: 50px;
+  padding-bottom: 500px !important;
+}
+
+.overview-wrapper { 
+  position: fixed;
+  bottom: 0px; 
+  width: 430px;
+  height: 36px;
+  left: calc(50% - 217px);
+}
+
+.overview-tab {
+  position: relative;
+  width: 400px;
+  height: 10px;
+  left: 10px;
+  top: 15px;
+  background: #5a5a5a;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.05);
+  border: 1px solid #3a3a3a;
+  border-radius: 5px;
+  transition: transform 0.25s ease;
+}
+.overview-tab.open { 
+  transform: translateY(-400px);
+  z-index: 10;
+  left: 15px;
+}
+
+.overview-container {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  left: calc(50% - 202px);
+  transform: scaleY(0); 
+  opacity: 0;
+  bottom: 15px;
+  transform-origin: bottom center;
+  border: 2px solid rgb(94, 94, 94);
+  border-radius: 10px;
+  background-color: #1a1a1a;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.overview-container.open { 
+  transform: scaleY(1); 
+  opacity: 1; 
+}
+
+.timeline-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 358px;
+  height: 150px;
+  max-height: 150px;
+  overflow-y: hidden;
+  overflow-x: auto;
+  margin-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-shadow: inset 5px 5px 15px #121212, inset -5px -5px 15px #121212;
 }
 
 .main-edit-button-container {
@@ -39,4 +108,8 @@
 .box {
   display: flex;
   justify-content: center;
+}
+
+.no-background {
+  background-color: transparent !important;
 }

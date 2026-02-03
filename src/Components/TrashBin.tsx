@@ -9,10 +9,10 @@ export default function TrashBin({ active }: { active: boolean }) {
   if (!active) return null;
 
   return (
-    <div ref={setNodeRef} style={{ position: "fixed", bottom: 40, right: 40, width: 100, height: 100, borderRadius: "50%",
+    <div ref={setNodeRef} style={{ position: "fixed", bottom: 15, right: 15, width: 75, height: 75, borderRadius: "50%",
         backgroundColor: isOver ? "#ff4d4f" : "#333", display: "flex", alignItems: "center", justifyContent: "center",
         color: "white", boxShadow: "0 8px 20px rgba(0,0,0,0.3)", zIndex: 9999, transition: "background-color 0.2s ease", }}>
-      <FaTrash size={36} />
+      <FaTrash size={32} />
     </div>
   );
 }

@@ -42,7 +42,7 @@ export default function LocationBox({ boxData, onChange}: Props) {
 
     return (
         <div className="location-box">
-            <div style={{width:450, height: 40, borderBottom: "1px solid grey"}} />
+            <div style={{width:450, height: 40, borderBottom: "2px solid grey"}} />
             {rows.map((row) => (
                 <BoxRow key={row.id} rowType={row.rowType} value={row.value} onChange={(val) => updateRow(row.id, val)} />
             ))}

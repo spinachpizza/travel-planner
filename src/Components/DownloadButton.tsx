@@ -13,7 +13,7 @@ export default function DownloadButton({ captureRef }: Props) {
     const element = captureRef.current;
 
     // Render at higher scale for better resolution
-    const canvas = await html2canvas(element, { scale: 2 });
+    const canvas = await html2canvas(element, { scale: 2, backgroundColor: "none" });
     const imgData = canvas.toDataURL("image/png");
 
     const pdf = new jsPDF("p", "mm", "a4");

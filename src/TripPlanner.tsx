@@ -12,6 +12,7 @@ import DownloadButton from './Components/DownloadButton.tsx';
 import { FaHouseChimney } from 'react-icons/fa6';
 import TrashBin from './Components/TrashBin.tsx';
 import SortableBox from './Components/SortableBox.tsx';
+import OverviewTab from './Components/OverviewTab.tsx';
 
 export default function TripPlanner() {
     const [boxes, setBoxes] = useState<BoxData[]>(() => {
@@ -73,20 +74,20 @@ export default function TripPlanner() {
 
     return (
         <>
-            <div className="main-container" ref={plannerRef}>
+            <div className="main-container sunken">
                 <div style={{ width: 300, height: 200, border: "2px solid grey", borderRadius: 20}}>
                     <p style={{ fontSize: 50, fontWeight: "bold", marginTop: 20 }}>Home</p>
                     <FaHouseChimney size={75} style={{marginTop: -80}} />
                 </div>
                 <DndContext sensors={sensors} collisionDetection={pointerWithin} onDragStart={(event) => setActiveId(event.active.id as string)}
-                    onDragEnd={handleDragEnd} onDragCancel={() => setActiveId(null)}>
+                    onDragEnd={handleDragEnd} onDragCancel={() => setActiveId(null)} >
                     <SortableContext items={boxes.map(b => b.id)} strategy={verticalListSortingStrategy}>
-                        <div className="main-container">
+                        <div className="main-container" ref={plannerRef}>
                         {boxes.map(box => (
                             <SortableBox key={box.id} box={box} onChange={updateBox} activeId={activeId} />
                         ))}
-                        <AddNewBox onAdd={addBox} />
                         </div>
+                        <AddNewBox onAdd={addBox} />
                     </SortableContext>
 
                     <DragOverlay>
@@ -107,6 +108,7 @@ export default function TripPlanner() {
                     </DragOverlay>
                     <TrashBin active={!!activeId} />
                 </DndContext>
+                <OverviewTab boxes={boxes} />
             </div>
             <DownloadButton captureRef={plannerRef} />
         </>

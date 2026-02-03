@@ -10,7 +10,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #1a1a1a;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -82,6 +82,11 @@ p {
     font-size: 18px;
 }
 
+.larger-text {
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+}
+
 .default-text {
     font-family: Arial, sans-serif;
     font-size: 16px;
@@ -89,6 +94,10 @@ p {
 
 .icon {
   margin: 5px;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .type-select {

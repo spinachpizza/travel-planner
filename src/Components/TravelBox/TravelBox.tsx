@@ -51,7 +51,7 @@ export default function TravelBox({boxData, onChange}: Props) {
                 <Arrow />
             </div>   
             <div className="travel-box">
-                <div style={{width:450, height: 40, borderBottom: "1px solid grey"}} />
+                <div style={{width:450, height: 40, borderBottom: "2px solid grey"}} />
                 {rows.map((row) => (
                     <BoxRow key={row.id} rowType={row.rowType} value={row.value} onChange={(val) => updateRow(row.id, val)} />
                 ))}

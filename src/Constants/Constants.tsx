@@ -40,6 +40,7 @@ export const defaultTravelRowTypes: BoxRowData[] = [
 export const costRowTypes : RowType[] = [
     RowTypeValues.AccomodationCost,
     RowTypeValues.FoodCosts,
+    RowTypeValues.TravelCost,
     RowTypeValues.OtherCosts
 ]
 
