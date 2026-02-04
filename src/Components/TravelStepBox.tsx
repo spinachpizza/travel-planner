@@ -7,3 +7,9 @@ export interface BoxData {
   type: BoxType;
   rows: BoxRowData[];
 }
+
+export type TripProfile = {
+  id: string;
+  name: string;
+  boxes: BoxData[];
+};

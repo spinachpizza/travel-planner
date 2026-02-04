@@ -45,7 +45,7 @@ export default function AddNewBox({ onAdd }: Props) {
             {!open &&
                 <div className="container">
                     <div className="button" onClick={() => {setOpen(true);}}>
-                        <FaPlus size={75} />
+                        <FaPlus size={45} />
                     </div>
                 </div>
             }

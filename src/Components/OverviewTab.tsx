@@ -13,25 +13,30 @@ interface Props {
 }
 export default function OverviewTab({ boxes }: Props) {
     const [open, setOpen] = useState(false);
+    const [numberOfPeople, setNumberOfPeople] = useState(1);
 
     const totalCost = TotalCost({ boxes });
 
-    const totalLength = TripLength({ boxes }) ?? "";
+    const totalLength = TripLength({ boxes }) ?? "0 days";
 
     const dateFrom = DateFrom({ boxes }) ?? "";
     const dateTo = DateTo({ boxes }) ?? "";
+
+    const numberOfPeopleOptions = [1,2,3,4,5,6,7,8,9,10];
     
     return (
         <div className={`overview-wrapper ${open ? "" : "closed"}`} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
             <div className={`overview-tab ${open ? "open" : ""}`} />
 
             <div className={`overview-container ${open ? "open" : ""}`}>
-                <p className="larger-text">Trip Overview</p>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", borderBottom: "1px solid grey", marginBottom: 15, height: 60 }}>
+                    <p className="larger-text">Trip Overview</p>
+                </div>
                 <div style={{display: "flex", flexDirection: "row", padding: 10, alignItems: "center" }} >
                     <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", padding: 15,
                     width: 190, height: 50, marginTop: -10,
                     }}>
-                        <TitleAndContent title={"Total Cost: "} content={totalCost} />
+                        <TitleAndContent title={"Total Cost: "} content={"£ " + totalCost.toString()} />
                         <TitleAndContent title={"Date From: "} content={dateFrom} />
                     </div>
                     <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", padding: 15,
@@ -43,6 +48,25 @@ export default function OverviewTab({ boxes }: Props) {
                 </div>
                 <div className="timeline-container">
                     <TimeLine boxes={boxes} />
+                </div>
+                <div style={{display: "flex", flexDirection: "row", padding: 10, alignItems: "center" }} >
+                    <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", padding: 15,
+                    width: 190, height: 50, marginTop: -10,
+                    }}>
+                        <TitleAndContent title={"Cost Per Person: "} content={"£ " + ((totalCost / numberOfPeople).toFixed(2)).toString()} />
+                    </div>
+                    <div style={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-start", padding: 15,
+                    width: 190, height: 50, marginTop: -10,
+                    }}>
+                        <TitleAndContent title={"Number of People: "} content="" />
+                        <select style={{ width: 50, height: 25, paddingLeft: 5 }} value={numberOfPeople} onChange={(e) => setNumberOfPeople(Number(e.target.value))} >
+                            {numberOfPeopleOptions.map((number) => (
+                                <option key={number} value={number}>
+                                    {number}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -83,7 +107,7 @@ function TotalCost({ boxes }: Props) {
             return isNaN(n) ? sum : sum + n; 
         }, 0);
     
-    return "£ " + totalCost.toString();
+    return totalCost;
 }
 
 function DateFrom({ boxes }: Props) {

@@ -75,9 +75,17 @@ export default function TripPlanner() {
     return (
         <>
             <div className="main-container sunken">
-                <div style={{ width: 300, height: 200, border: "2px solid grey", borderRadius: 20}}>
-                    <p style={{ fontSize: 50, fontWeight: "bold", marginTop: 20 }}>Home</p>
-                    <FaHouseChimney size={75} style={{marginTop: -80}} />
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                    <div style={{width:400}} />
+                    <div style={{ width: 300, height: 200, border: "2px solid grey", borderRadius: 20}}>
+                        <p style={{ fontSize: 50, fontWeight: "bold", marginTop: 20 }}>Home</p>
+                        <FaHouseChimney size={75} style={{marginTop: -80}} />
+                    </div>
+                    <div style={{width:400}}>
+                        <select style={{width: 150, height: 30, marginLeft: 150}}>
+
+                        </select>
+                    </div>
                 </div>
                 <DndContext sensors={sensors} collisionDetection={pointerWithin} onDragStart={(event) => setActiveId(event.active.id as string)}
                     onDragEnd={handleDragEnd} onDragCancel={() => setActiveId(null)} >
