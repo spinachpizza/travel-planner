@@ -7,6 +7,7 @@ import { RowTypeValues } from "../Enums/RowType";
 import { FaLocationDot } from "react-icons/fa6";
 import TransportIcon from "./TravelBox/TransportIcon";
 import type { TransportType } from "../Enums/TransportType";
+import { HiOutlineBars2 } from "react-icons/hi2";
 
 interface Props {
     boxes: BoxData[];
@@ -26,7 +27,9 @@ export default function OverviewTab({ boxes }: Props) {
     
     return (
         <div className={`overview-wrapper ${open ? "" : "closed"}`} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
-            <div className={`overview-tab ${open ? "open" : ""}`} />
+            <div className={`overview-tab ${open ? "open" : ""}`}>
+                <HiOutlineBars2 style={{marginBottom: 12, color: "white" }} />
+            </div>
 
             <div className={`overview-container ${open ? "open" : ""}`}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", borderBottom: "1px solid grey", marginBottom: 15, height: 60 }}>

@@ -26,7 +26,7 @@
 
 .overview-wrapper { 
   position: fixed;
-  bottom: 0px; 
+  bottom: -12px; 
   width: 430px;
   height: 36px;
   left: calc(50% - 217px);
@@ -35,13 +35,13 @@
 .overview-tab {
   position: relative;
   width: 400px;
-  height: 10px;
+  height: 30px;
   left: 15px;
-  top: 13px;
+  top: 10px;
   background: #5a5a5a;
   box-shadow: 0 0 6px rgba(255, 255, 255, 0.05);
   border: 1px solid #a1a1a1;
-  border-radius: 5px;
+  border-radius: 20px;
   transition: transform 0.25s ease;
 }
 .overview-tab.open { 
@@ -53,11 +53,11 @@
 .overview-container {
   position: relative;
   width: 400px;
-  height: 400px;
+  height: 420px;
   left: 12px;
   transform: scaleY(0); 
   opacity: 0;
-  bottom: 395px;
+  bottom: 410px;
   transform-origin: bottom center;
   border: 3px solid rgb(94, 94, 94);
   box-shadow: inset 5px 5px 15px #121212, inset -5px -5px 15px #121212, 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

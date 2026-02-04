@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import AddNewBox from './Components/AddNewBox.tsx'
 import LocationBox from './Components/LocationBox/LocationBox.tsx'
 import TravelBox from './Components/TravelBox/TravelBox.tsx'
-import type { BoxData, BoxType } from './Components/TravelStepBox.tsx';
+import type { BoxData, BoxType, TripProfile } from './Components/TravelStepBox.tsx';
 import { defaultLocationRowTypes, defaultTravelRowTypes } from './Constants/Constants.tsx';
 import './App.css';
 
@@ -13,79 +13,127 @@ import { FaHouseChimney } from 'react-icons/fa6';
 import TrashBin from './Components/TrashBin.tsx';
 import SortableBox from './Components/SortableBox.tsx';
 import OverviewTab from './Components/OverviewTab.tsx';
+import ProfileSelect from './Components/ProfileSelect.tsx';
 
 export default function TripPlanner() {
-    const [boxes, setBoxes] = useState<BoxData[]>(() => {
-        const saved = localStorage.getItem("tripBoxes");
-        return saved ? JSON.parse(saved) : [];
-    });
-
+    const [profiles, setProfiles] = useState<TripProfile[]>([]);
+    const [activeProfileId, setActiveProfileId] = useState<string | null>(null);
     const [activeId, setActiveId] = useState<string | null>(null);
+    const [hasLoaded, setHasLoaded] = useState(false);
 
     useEffect(() => {
-        const saved = localStorage.getItem("tripBoxes");
-        if (saved) {
-            setBoxes(JSON.parse(saved));
+        const savedProfiles = localStorage.getItem("tripProfiles");
+        const savedActiveId = localStorage.getItem("activeProfileId");
+
+        if (savedProfiles) {
+            const parsed = JSON.parse(savedProfiles);
+            setProfiles(parsed);
+
+            if (savedActiveId && parsed.some((p: TripProfile) => p.id === savedActiveId))
+            {
+                setActiveProfileId(savedActiveId);
+            } else {
+                setActiveProfileId(parsed[0]?.id ?? null);
+            }
         }
+        
+        setHasLoaded(true);
     }, []);
 
     useEffect(() => {
-        localStorage.setItem("tripBoxes", JSON.stringify(boxes));
-    }, [boxes]);
+        if (!hasLoaded) return;
+
+        localStorage.setItem("tripProfiles", JSON.stringify(profiles));
+
+        if (activeProfileId) {
+            localStorage.setItem("activeProfileId", activeProfileId);
+        }
+    }, [profiles, activeProfileId, hasLoaded]);
+
+    const activeProfile = profiles.find(p => p.id === activeProfileId);
+    const boxes = activeProfile?.boxes ?? [];
 
     const addBox = (type: BoxType) => {
+        if (!activeProfileId) return;
+
         const newBox: BoxData = {
             id: crypto.randomUUID(),
             type,
-            rows: type == "location" ? defaultLocationRowTypes : defaultTravelRowTypes
+            rows: type === "location"
+                ? defaultLocationRowTypes
+                : defaultTravelRowTypes
         };
-        setBoxes(prev => [...prev, newBox]);
+
+        setProfiles(prev =>
+        prev.map(p =>
+            p.id === activeProfileId
+            ? { ...p, boxes: [...p.boxes, newBox] }
+            : p
+        )
+        );
     };
 
     const updateBox = (updatedBox: BoxData) => {
-        setBoxes(prev =>
-            prev.map(box => box.id === updatedBox.id ? updatedBox : box)
+        if (!activeProfileId) return;
+
+        setProfiles(prev =>
+        prev.map(p =>
+            p.id === activeProfileId
+            ? {
+                ...p,
+                boxes: p.boxes.map(b =>
+                    b.id === updatedBox.id ? updatedBox : b
+                )
+                }
+            : p
+        )
         );
     };
 
     const sensors = useSensors(useSensor(PointerSensor));
+    const plannerRef = useRef<HTMLDivElement>(null);
 
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
-        console.log("ACTIVE:", active.id);
-        console.log("OVER:", over?.id);
         setActiveId(null);
-
-        if (!over) return;
+        if (!over || !activeProfileId) return;
 
         if (over.id === "trash") {
-            setBoxes(prev => prev.filter(b => b.id !== active.id));
+            setProfiles(prev =>
+                prev.map(p =>
+                p.id === activeProfileId
+                    ? { ...p, boxes: p.boxes.filter(b => b.id !== active.id) }
+                    : p
+                )
+            );
             return;
         }
 
-        if (active.id === over.id) return;
         const oldIndex = boxes.findIndex(b => b.id === active.id);
         const newIndex = boxes.findIndex(b => b.id === over.id);
 
-        setBoxes(prev => arrayMove(prev, oldIndex, newIndex));
+        setProfiles(prev =>
+            prev.map(p =>
+                p.id === activeProfileId
+                ? { ...p, boxes: arrayMove(p.boxes, oldIndex, newIndex) }
+                : p
+            )
+        );
     };
-
-    const plannerRef = useRef<HTMLDivElement>(null);
 
     return (
         <>
             <div className="main-container sunken">
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                    <div style={{width:400}} />
+                    <div style={{width:400}}>
+                        <ProfileSelect profiles={profiles} activeProfileId={activeProfileId} setActiveProfileId={setActiveProfileId}
+                            setProfiles={setProfiles} />
+                    </div>
                     <div style={{ width: 300, height: 200, border: "2px solid grey", borderRadius: 20}}>
                         <p style={{ fontSize: 50, fontWeight: "bold", marginTop: 20 }}>Home</p>
                         <FaHouseChimney size={75} style={{marginTop: -80}} />
                     </div>
-                    <div style={{width:400}}>
-                        <select style={{width: 150, height: 30, marginLeft: 150}}>
-
-                        </select>
-                    </div>
+                    <div style={{width:400}} />
                 </div>
                 <DndContext sensors={sensors} collisionDetection={pointerWithin} onDragStart={(event) => setActiveId(event.active.id as string)}
                     onDragEnd={handleDragEnd} onDragCancel={() => setActiveId(null)} >
