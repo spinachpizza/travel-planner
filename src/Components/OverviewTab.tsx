@@ -1,11 +1,11 @@
 import { useState } from "react";
 import '../App.css'
-import type { BoxData } from "./TravelStepBox";
+import type { BoxData } from "../Types/BoxData";
 import { costRowTypes } from "../Constants/Constants";
 import TitleAndContent from "./TitleAndContent";
 import { RowTypeValues } from "../Enums/RowType";
 import { FaLocationDot } from "react-icons/fa6";
-import TransportIcon from "./TravelBox/TransportIcon";
+import TransportIcon from "./Icons/TransportIcon";
 import type { TransportType } from "../Enums/TransportType";
 import { HiOutlineBars2 } from "react-icons/hi2";
 
@@ -27,14 +27,17 @@ export default function OverviewTab({ boxes }: Props) {
     
     return (
         <div className={`overview-wrapper ${open ? "" : "closed"}`} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+            
             <div className={`overview-tab ${open ? "open" : ""}`}>
                 <HiOutlineBars2 style={{marginBottom: 12, color: "white" }} />
             </div>
 
             <div className={`overview-container ${open ? "open" : ""}`}>
+
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", borderBottom: "1px solid grey", marginBottom: 15, height: 60 }}>
                     <p className="larger-text">Trip Overview</p>
                 </div>
+
                 <div style={{display: "flex", flexDirection: "row", padding: 10, alignItems: "center" }} >
                     <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", padding: 15,
                     width: 190, height: 50, marginTop: -10,
@@ -49,9 +52,11 @@ export default function OverviewTab({ boxes }: Props) {
                         <TitleAndContent title={"Date To: "} content={dateTo} />
                     </div>
                 </div>
+
                 <div className="timeline-container">
                     <TimeLine boxes={boxes} />
                 </div>
+
                 <div style={{display: "flex", flexDirection: "row", padding: 10, alignItems: "center" }} >
                     <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", padding: 15,
                     width: 190, height: 50, marginTop: -10,
@@ -71,7 +76,9 @@ export default function OverviewTab({ boxes }: Props) {
                         </select>
                     </div>
                 </div>
+
             </div>
+            
         </div>
     )
 }
@@ -117,7 +124,7 @@ function DateFrom({ boxes }: Props) {
 
     const firstDateFrom = boxes
         .flatMap(box => box.rows)
-        .find(row => row.rowType == RowTypeValues.DateFrom)
+        .find(row => row.rowType == RowTypeValues.DateFrom || row.rowType == RowTypeValues.TravelDate)
 
     if (!firstDateFrom) { 
         return null; 
@@ -131,7 +138,7 @@ function DateTo({ boxes }: Props) {
     const lastDateTo = [...boxes]
         .reverse()
         .flatMap(box => box.rows)
-        .find(row => row.rowType == RowTypeValues.DateTo)
+        .find(row => row.rowType == RowTypeValues.DateTo || row.rowType == RowTypeValues.TravelDate)
 
     if (!lastDateTo) { 
         return null; 

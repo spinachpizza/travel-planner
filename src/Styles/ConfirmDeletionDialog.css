@@ -1,0 +1,28 @@
+.confirm-deletion-container {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.confirm-deletion-dialog-box {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 12px;
+    min-width: 300px;
+    text-align: center;
+    border: 1px solid grey;
+}
+
+.confirm-deletion-dialog-button {
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}

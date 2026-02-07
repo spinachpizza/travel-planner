@@ -1,0 +1,14 @@
+.arrow-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-line {
+    width: 2px;
+    background-color: grey;
+    margin-top: 20px;
+    min-height: 90%;
+}

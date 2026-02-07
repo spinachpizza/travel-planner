@@ -1,9 +1,9 @@
-import { RowTypeValues, type RowType } from "../Enums/RowType";
+import { RowTypeValues, type RowType } from "../../Enums/RowType";
 
-import { FaHouseChimney, FaLocationDot } from "react-icons/fa6";
+import { FaHouseChimney, FaLocationDot, FaNoteSticky, FaRegAddressBook, FaTicket } from "react-icons/fa6";
 import { GiKnifeFork } from "react-icons/gi";
 import { FaCalendarAlt } from "react-icons/fa";
-import { MdAttachMoney, MdOutlineTimer } from "react-icons/md";
+import { MdAirlineSeatFlat, MdAirlineSeatLegroomNormal, MdAirlineSeatReclineNormal, MdAttachMoney, MdNote, MdNotes, MdOutlineTimer } from "react-icons/md";
 
 interface Props {
     rowType : RowType;
@@ -39,6 +39,18 @@ export default function Icon({ rowType, size = 18 } : Props) {
         case RowTypeValues.TravelCost:
         case RowTypeValues.OtherCosts:
             icon = <MdAttachMoney size={20} />
+            break;
+        case RowTypeValues.Notes:
+            icon = <MdNotes size={20} />
+            break;
+        case RowTypeValues.Address:
+            icon = <FaRegAddressBook size={20} />
+            break;
+        case RowTypeValues.SeatInfo:
+            icon = <MdAirlineSeatReclineNormal size={20} />
+            break;
+        case RowTypeValues.BookingReference:
+            icon = <FaTicket size={20} />
             break;
         default:
             icon = <></>

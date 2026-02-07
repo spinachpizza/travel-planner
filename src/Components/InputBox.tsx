@@ -15,7 +15,7 @@ export default function InputBox({ textSize, rowType = RowTypeValues.NotSet, val
     switch(rowType) {
         case RowTypeValues.NotSet:
             content = (
-                <input className={`box-row-input ${textClass}`} value={value} onChange={onChange} />
+                <input className={`box-row-input ${textClass}`} value={value} onChange={onChange} maxLength={24}/>
             )
             break;
         case RowTypeValues.AccomodationCost:
@@ -25,7 +25,7 @@ export default function InputBox({ textSize, rowType = RowTypeValues.NotSet, val
             content = (
                 <>
                     <p className="default-text" style={{marginLeft: 20}}>£</p>
-                    <input className={`box-row-input ${textClass}`} value={value} onChange={onChange}
+                    <input className={`box-row-input ${textClass}`} value={value} onChange={onChange} type="number"
                         style={{ width: "25%", marginLeft: 5, marginBottom: 10, marginTop: 10, marginRight: 15 }} />
                 </>
             )
@@ -42,14 +42,14 @@ export default function InputBox({ textSize, rowType = RowTypeValues.NotSet, val
         case RowTypeValues.LeaveTime:
         case RowTypeValues.ArriveTime:
             content = (
-                <input className={`box-row-input ${textClass}`} value={value} onChange={onChange}
+                <input className={`box-row-input ${textClass}`} value={value} onChange={onChange} maxLength={10}
                     style={{ width: "30%", marginBottom: 10, marginTop: 10, marginRight: 15 }} />
             )
             break;
         default:
             content = (
                 <>
-                    <input className={`box-row-input ${textClass}`} value={value} onChange={onChange} />
+                    <input className={`box-row-input ${textClass}`} maxLength={50} value={value} onChange={onChange} />
                 </>
             )
     }

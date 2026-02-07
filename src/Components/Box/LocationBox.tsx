@@ -1,10 +1,10 @@
-import './LocationBox.css'
+import '../../Styles/Box.css'
 
-import BoxRow from '../BoxRow'
+import BoxRow from './BoxRow'
 import { type RowType } from '../../Enums/RowType'
-import AddRowDropdown from "../AddRowDropdown";
+import AddRowDropdown from "../Dropdowns/AddRowDropdown";
 import { costRowTypes, validLocationRowTypes as validRowTypes } from "../../Constants/Constants";
-import type { BoxData } from "../TravelStepBox";
+import type { BoxData } from "../../Types/BoxData";
 
 interface Props {
     boxData: BoxData;

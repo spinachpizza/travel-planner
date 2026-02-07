@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { RowTypeValues } from '../Enums/RowType'
 import { TransportTypeValues } from '../Enums/TransportType'
-import Icon from './Icon'
-import './AddNewBox.css'
-import TransportIcon from './TravelBox/TransportIcon'
+import Icon from './Icons/Icon'
+import '../Styles/AddNewBox.css'
+import TransportIcon from './Icons/TransportIcon'
 import { FaPlus } from 'react-icons/fa6'
 
 type Props = {

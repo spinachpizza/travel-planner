@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import AddNewBox from './Components/AddNewBox.tsx'
-import LocationBox from './Components/LocationBox/LocationBox.tsx'
-import TravelBox from './Components/TravelBox/TravelBox.tsx'
-import type { BoxData, BoxType, TripProfile } from './Components/TravelStepBox.tsx';
+import LocationBox from './Components/Box/LocationBox.tsx'
+import TravelBox from './Components/Box/TravelBox.tsx'
+import type { BoxData, BoxType } from './Types/BoxData.tsx';
 import { defaultLocationRowTypes, defaultTravelRowTypes } from './Constants/Constants.tsx';
 import './App.css';
 
@@ -13,7 +13,8 @@ import { FaHouseChimney } from 'react-icons/fa6';
 import TrashBin from './Components/TrashBin.tsx';
 import SortableBox from './Components/SortableBox.tsx';
 import OverviewTab from './Components/OverviewTab.tsx';
-import ProfileSelect from './Components/ProfileSelect.tsx';
+import ProfileSelect from './Components/Dropdowns/ProfileSelect.tsx';
+import type { TripProfile } from './Types/TripProfile.tsx';
 
 export default function TripPlanner() {
     const [profiles, setProfiles] = useState<TripProfile[]>([]);
@@ -129,9 +130,9 @@ export default function TripPlanner() {
                         <ProfileSelect profiles={profiles} activeProfileId={activeProfileId} setActiveProfileId={setActiveProfileId}
                             setProfiles={setProfiles} />
                     </div>
-                    <div style={{ width: 300, height: 200, border: "2px solid grey", borderRadius: 20}}>
+                    <div style={{ width: 300, height: 200, border: "3px solid grey", borderRadius: 20, boxShadow: "3px 3px 12px rgba(0, 0, 0, 0.7)", marginBottom: 10 }}>
                         <p style={{ fontSize: 50, fontWeight: "bold", marginTop: 20 }}>Home</p>
-                        <FaHouseChimney size={75} style={{marginTop: -80}} />
+                        <FaHouseChimney size={75} style={{ marginTop: -80 }} />
                     </div>
                     <div style={{width:400}} />
                 </div>

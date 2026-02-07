@@ -1,0 +1,132 @@
+.profile-select-main-container {
+    position: relative;
+    width: 210px;
+    margin-left: 30px;
+    margin-top: -20px;
+}
+
+.profile-select-display-container {
+    height: 32px;
+    padding: 0px 10px;
+    border: 1px solid grey;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    background-color: #1a1a1a;
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7);
+}
+
+.profile-select-dropdown-container {
+    position: absolute;
+    top: 36px;
+    width: 100%;
+    background-color: #1a1a1a;
+    border: 1px solid grey;
+    border-radius: 6px;
+    z-index: 100;
+    overflow: hidden;
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7);
+}
+
+.profile-select-row-container {
+    position: relative;
+    padding: 5px 30px 5px 20px;
+    padding-left: 20px;
+    cursor: pointer;
+    text-align: start;
+}
+
+.profile-select-edit-box {
+    position: relative;
+    left: -10px;
+    width: 90%;
+    height: 20px;
+    padding: 4px 6px;
+    background-color: #242424;
+    border: 1px solid grey;
+    border-radius: 4px;
+    color: white;
+}
+
+.profile-select-edit-button {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 30px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: lightblue;
+}
+.profile-select-edit-button:hover {
+    background-color: #4a4a4a;
+}
+
+.profile-select-edit-save-button {
+    position: absolute;
+    right: 38px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: lightgreen;
+}
+
+.profile-select-delete-button {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 30px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: coral;
+}
+.profile-select-delete-button:hover {
+    background-color: #4a4a4a;
+}
+
+.profile-select-add-button {
+    text-align: start;
+    padding: 8px 10px;
+    padding-left: 20px;
+    cursor: pointer;
+    color: lightblue;
+}
+
+.profile-select-add-box {
+    width: 150px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid grey;
+    background-color: #242424;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+}
+
+.profile-select-add-confirm-button {
+    position: absolute;
+    right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    border: none;
+    color: lightblue;
+    cursor: pointer;
+}
+.profile-select-add-confirm-button:hover {
+    background-color: #4a4a4a;
+}

@@ -1,0 +1,6 @@
+.drag-icon {
+    cursor: grab;
+    position: absolute;
+    font-size: 30px;
+    color: #888;
+}

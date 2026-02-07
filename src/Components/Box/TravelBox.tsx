@@ -1,13 +1,13 @@
-import Arrow from "./Arrow";
+import Arrow from "../Arrow";
 import { RowTypeValues, type RowType } from "../../Enums/RowType";
-import AddRowDropdown from "../AddRowDropdown";
-import type { BoxRowData } from "../BoxRow";
+import AddRowDropdown from "../Dropdowns/AddRowDropdown";
+import type { BoxRowData } from "../Box/BoxRow";
 import { validTravelRowTypes as validRowTypes } from "../../Constants/Constants";
-import BoxRow from "../BoxRow";
-import './TravelBox.css'
+import BoxRow from "../Box/BoxRow";
+import '../../Styles/Box.css'
 import type { TransportType } from "../../Enums/TransportType";
-import TransportIcon from "./TransportIcon";
-import type { BoxData } from "../TravelStepBox";
+import TransportIcon from "../Icons/TransportIcon";
+import type { BoxData } from "../../Types/BoxData";
 
 interface Props {
     boxData: BoxData;
