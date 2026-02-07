@@ -1,9 +1,9 @@
 import { RowTypeValues, type RowType } from "../../Enums/RowType";
 
-import { FaHouseChimney, FaLocationDot, FaNoteSticky, FaRegAddressBook, FaTicket } from "react-icons/fa6";
+import { FaHouseChimney, FaLocationDot, FaRegAddressBook, FaTicket } from "react-icons/fa6";
 import { GiKnifeFork } from "react-icons/gi";
 import { FaCalendarAlt } from "react-icons/fa";
-import { MdAirlineSeatFlat, MdAirlineSeatLegroomNormal, MdAirlineSeatReclineNormal, MdAttachMoney, MdNote, MdNotes, MdOutlineTimer } from "react-icons/md";
+import { MdAirlineSeatReclineNormal, MdAttachMoney, MdNotes, MdOutlineTimer } from "react-icons/md";
 
 interface Props {
     rowType : RowType;
