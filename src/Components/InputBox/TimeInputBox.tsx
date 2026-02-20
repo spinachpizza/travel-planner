@@ -26,7 +26,7 @@ export default function MaskedTimeInput({ value, onChange, style, className }: M
       }
     } else if (e.key === "Backspace") {
       // find last filled digit (skip colon)
-      const index = [...chars].reverse().findIndex((c, i) => c !== "-" && c !== ":" );
+      const index = [...chars].reverse().findIndex((c) => c !== "-" && c !== ":" );
       if (index !== -1) {
         const realIndex = chars.length - 1 - index;
         chars[realIndex] = "-";

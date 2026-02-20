@@ -1,5 +1,4 @@
 import '../../Styles/Box.css'
-import TextBox from '../TextBox';
 import type { BoxRowData, CostRowData, DateRowData, TextRowData, TransportRowData, TwoTextRowData } from '../../Types/BoxRowData';
 import type { JSX } from 'react';
 import CostInputBox from '../InputBox/CostInputBox';
