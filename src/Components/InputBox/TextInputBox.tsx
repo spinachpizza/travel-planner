@@ -1,7 +1,7 @@
 import { RowTypeValues, type RowType } from "../../Enums/RowType";
 import TextBox from "../TextBox";
 import '../../Styles/Box.css'
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 interface Props {
     textSize: "L" | "S";
@@ -16,9 +16,7 @@ export default function InputBox({ textSize, rowType = RowTypeValues.NotSet, val
 
     const locationInputRef = useRef<HTMLInputElement>(null);
 
-    const handleLocationInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange?.(e.target.value);
-
+    const resizeInput = (val: string) => {
         const input = locationInputRef.current;
         if (!input) return;
 
@@ -26,16 +24,28 @@ export default function InputBox({ textSize, rowType = RowTypeValues.NotSet, val
         tmp.style.visibility = "hidden";
         tmp.style.whiteSpace = "pre";
         tmp.style.font = getComputedStyle(input).font;
-        tmp.textContent = e.target.value || "--:--";
+        tmp.textContent = val || "--:--";
         document.body.appendChild(tmp);
 
         const newWidth = Math.min(
-            Math.max(tmp.offsetWidth + 20, input.parentElement ? input.parentElement.offsetWidth * 0.1 : 0), // min 40% of parent
-            input.parentElement ? input.parentElement.offsetWidth * 0.6 : input.offsetWidth                   // max 60% of parent
+            Math.max(tmp.offsetWidth + 20, input.parentElement ? input.parentElement.offsetWidth * 0.1 : 0),
+            input.parentElement ? input.parentElement.offsetWidth * 0.6 : input.offsetWidth
         );
+
         input.style.width = `${newWidth}px`;
         document.body.removeChild(tmp);
     };
+
+    const handleLocationInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange?.(e.target.value);
+        resizeInput(e.target.value);
+    };
+
+    useEffect(() => {
+        if (rowType === RowTypeValues.Location) {
+            resizeInput(value ?? "");
+        }
+    }, [value, rowType]);
 
     if (rowType === RowTypeValues.Notes)
     {
