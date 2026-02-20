@@ -1,22 +1,24 @@
 import { useState } from "react";
 import '../App.css'
 import type { BoxData } from "../Types/BoxData";
-import { costRowTypes } from "../Constants/Constants";
 import TitleAndContent from "./TitleAndContent";
 import { RowTypeValues } from "../Enums/RowType";
 import { FaLocationDot } from "react-icons/fa6";
 import TransportIcon from "./Icons/TransportIcon";
 import type { TransportType } from "../Enums/TransportType";
 import { HiOutlineBars2 } from "react-icons/hi2";
+import { isCostRow, isTransportRow } from "./Box/BoxHelpers";
+import type { CostRowData, DateRowData, TextRowData, TransportRowData } from "../Types/BoxRowData";
 
 interface Props {
     boxes: BoxData[];
 }
+
 export default function OverviewTab({ boxes }: Props) {
     const [open, setOpen] = useState(false);
     const [numberOfPeople, setNumberOfPeople] = useState(1);
 
-    const totalCost = TotalCost({ boxes });
+    const totalCost = TotalCost({ boxes, totalPeople: numberOfPeople });
 
     const totalLength = TripLength({ boxes }) ?? "0 days";
 
@@ -92,12 +94,12 @@ function TimeLine({ boxes }: Props)
                     {box.type == "location" &&
                         <>
                             <FaLocationDot size={20} />
-                            <p>{box.rows.find(row => row.rowType == RowTypeValues.Location)?.value ?? ""}</p>
+                            <p>{(box.rows.find(row => row.rowType == RowTypeValues.Location) as TextRowData)?.value ?? ""}</p>
                         </>
                     }
                     {box.type == "travel" && 
                         <div style={{ marginTop: 20 }}>
-                            <TransportIcon transportType={box.rows.find(row => row.rowType == RowTypeValues.TransportType)!.value as TransportType} size={24} />
+                            <TransportIcon transportType={(box.rows.find(row => isTransportRow(row.rowType)) as TransportRowData)?.value ?? "Plane" as TransportType} size={24} />
                         </div>
                     }
                 </div>
@@ -106,15 +108,15 @@ function TimeLine({ boxes }: Props)
     )
 }
 
-function TotalCost({ boxes }: Props) {
+function TotalCost({ boxes, totalPeople}: { boxes: BoxData[], totalPeople: number }) {
 
     const rows = boxes.flatMap(box => box.rows)
 
     const totalCost = rows
-        .filter(row => costRowTypes.includes(row.rowType))
+        .filter(row => isCostRow(row.rowType))
         .reduce((sum, row) => { 
-            const n = Number(row.value); 
-            return isNaN(n) ? sum : sum + n; 
+            const n = (row as CostRowData).perPerson ? Number((row as CostRowData).cost) * totalPeople: Number((row as CostRowData).cost); 
+            return isNaN(n) ? sum : sum + n;
         }, 0);
     
     return totalCost;
@@ -122,29 +124,35 @@ function TotalCost({ boxes }: Props) {
 
 function DateFrom({ boxes }: Props) {
 
-    const firstDateFrom = boxes
+    const dateFromBoxes = boxes
         .flatMap(box => box.rows)
-        .find(row => row.rowType == RowTypeValues.DateFrom || row.rowType == RowTypeValues.TravelDate)
+        .filter(row => row.rowType == RowTypeValues.Dates || row.rowType == RowTypeValues.TravelDate)
+
+    const firstDateFrom = dateFromBoxes
+        .find(row => (row as DateRowData).fromDate != null)
 
     if (!firstDateFrom) { 
         return null; 
     } 
     
-    return firstDateFrom.value;
+    return (firstDateFrom as DateRowData).fromDate;
 }
 
 function DateTo({ boxes }: Props) {
 
-    const lastDateTo = [...boxes]
+    const dateToBoxes = [...boxes]
         .reverse()
         .flatMap(box => box.rows)
-        .find(row => row.rowType == RowTypeValues.DateTo || row.rowType == RowTypeValues.TravelDate)
+        .filter(row => row.rowType == RowTypeValues.Dates || row.rowType == RowTypeValues.TravelDate)
+
+    const lastDateTo = dateToBoxes
+        .find(row => (row as DateRowData).toDate != null)
 
     if (!lastDateTo) { 
         return null; 
     } 
     
-    return lastDateTo.value;
+    return (lastDateTo as DateRowData).toDate;
 }
 
 function TripLength({ boxes }: Props) {

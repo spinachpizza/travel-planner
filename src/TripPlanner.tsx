@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import AddNewBox from './Components/AddNewBox.tsx'
-import LocationBox from './Components/Box/LocationBox.tsx'
-import TravelBox from './Components/Box/TravelBox.tsx'
 import type { BoxData, BoxType } from './Types/BoxData.tsx';
-import { defaultLocationRowTypes, defaultTravelRowTypes } from './Constants/Constants.tsx';
+import { defaultLocationRowTypes, defaultTravelRowTypes, validLocationRowTypes, validTravelRowTypes } from './Constants/Constants.tsx';
 import './App.css';
 
 import { DndContext, PointerSensor, useSensor, useSensors, type DragEndEvent, DragOverlay, pointerWithin } from "@dnd-kit/core";
@@ -15,6 +13,8 @@ import SortableBox from './Components/SortableBox.tsx';
 import OverviewTab from './Components/OverviewTab.tsx';
 import ProfileSelect from './Components/Dropdowns/ProfileSelect.tsx';
 import type { TripProfile } from './Types/TripProfile.tsx';
+import Box from './Components/Box/Box.tsx';
+import { RowTypeValues } from './Enums/RowType.tsx';
 
 export default function TripPlanner() {
     const [profiles, setProfiles] = useState<TripProfile[]>([]);
@@ -27,14 +27,27 @@ export default function TripPlanner() {
         const savedActiveId = localStorage.getItem("activeProfileId");
 
         if (savedProfiles) {
-            const parsed = JSON.parse(savedProfiles);
-            setProfiles(parsed);
+            const parsed: TripProfile[] = JSON.parse(savedProfiles);
 
-            if (savedActiveId && parsed.some((p: TripProfile) => p.id === savedActiveId))
+            const cleanedProfiles = parsed.map(profile => ({
+                ...profile,
+                boxes: profile.boxes.map(box => ({
+                    ...box,
+                    rows: box.rows.filter(row =>
+                        box.type == "location" 
+                            ? row.rowType == RowTypeValues.Location || validLocationRowTypes.includes(row.rowType) 
+                            : row.rowType == RowTypeValues.TransportType || validTravelRowTypes.includes(row.rowType)
+                    )
+                }))
+            }))
+            
+            setProfiles(cleanedProfiles);
+            
+            if (savedActiveId && cleanedProfiles.some((p: TripProfile) => p.id === savedActiveId))
             {
                 setActiveProfileId(savedActiveId);
             } else {
-                setActiveProfileId(parsed[0]?.id ?? null);
+                setActiveProfileId(cleanedProfiles[0]?.id ?? null);
             }
         }
         
@@ -130,9 +143,9 @@ export default function TripPlanner() {
                         <ProfileSelect profiles={profiles} activeProfileId={activeProfileId} setActiveProfileId={setActiveProfileId}
                             setProfiles={setProfiles} />
                     </div>
-                    <div style={{ width: 300, height: 200, border: "3px solid grey", borderRadius: 20, boxShadow: "3px 3px 12px rgba(0, 0, 0, 0.7)", marginBottom: 10 }}>
-                        <p style={{ fontSize: 50, fontWeight: "bold", marginTop: 20 }}>Home</p>
-                        <FaHouseChimney size={75} style={{ marginTop: -80 }} />
+                    <div style={{ width: 300, height: 120, border: "2px solid #444444", borderRadius: 20, boxShadow: "3px 3px 12px rgba(0, 0, 0, 0.7)", marginBottom: 10 }}>
+                        <p style={{ fontSize: 30, fontWeight: "bold", marginTop: 10 }}>Home</p>
+                        <FaHouseChimney size={50} style={{ marginTop: -30 }} />
                     </div>
                     <div style={{width:400}} />
                 </div>
@@ -154,11 +167,7 @@ export default function TripPlanner() {
                             return (
                             <div style={{ display: "flex", justifyContent: "center", width: 1000, background: "none", padding: 8, borderRadius: 8,         
                                 opacity: 0.9, pointerEvents: "none" }}>
-                                {box.type === "location" ? (
-                                    <LocationBox boxData={box} onChange={updateBox} />
-                                ) : (
-                                    <TravelBox boxData={box} onChange={updateBox} />
-                                )}
+                                <Box boxData={box} onChange={updateBox} />
                             </div>
                             );
                         })() : null}

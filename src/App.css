@@ -82,7 +82,7 @@
   margin-top: 10px;
   padding-left: 20px;
   padding-right: 20px;
-  box-shadow: inset 5px 5px 15px #121212, inset -5px -5px 15px #121212;
+  box-shadow: inset 5px 5px 15px var(--dark-primary-color), inset -5px -5px 15px var(--dark-primary-color);
 }
 
 .main-edit-button-container {

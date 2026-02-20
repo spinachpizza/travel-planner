@@ -12,6 +12,10 @@
   color: rgba(255, 255, 255, 0.87);
   background-color: #1a1a1a;
 
+  --primary-color: #242424;
+  --dark-primary-color: #121212;
+  --secondary-color:
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -84,7 +88,7 @@ p {
 
 .larger-text {
   font-family: Arial, sans-serif;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .default-text {
@@ -98,15 +102,4 @@ p {
 
 .bold {
   font-weight: bold;
-}
-
-.type-select {
-    margin-left: 10px; 
-    width: 35%;
-    height: 60%;
-    padding-left: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
 }

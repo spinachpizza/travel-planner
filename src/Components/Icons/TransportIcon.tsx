@@ -1,11 +1,10 @@
-import { FaBusAlt, FaWalking } from "react-icons/fa";
-import { TransportTypeValues, type TransportType } from "../../Enums/TransportType";
-import { FaBicycle, FaCarSide, FaPlane, FaSailboat } from "react-icons/fa6";
-import { MdOutlineSurfing } from "react-icons/md";
+import { FaWalking } from "react-icons/fa";
+import { TransportTypeValues } from "../../Enums/TransportType";
+import { FaBicycle, FaBus, FaCarSide, FaPlane, FaSailboat, FaTrainSubway } from "react-icons/fa6";
 import { GiSurferVan } from "react-icons/gi";
 
 interface Props {
-    transportType: TransportType | "";
+    transportType: string;
     size: number;
 }
 
@@ -17,7 +16,7 @@ export default function Icon({ transportType, size } : Props) {
             icon = <FaSailboat size={size} />
             break;
         case TransportTypeValues.Bus:
-            icon = <FaBusAlt size={size} />
+            icon = <FaBus size={size} />
             break;
         case TransportTypeValues.Car:
             icon = <FaCarSide size={size} />
@@ -28,8 +27,8 @@ export default function Icon({ transportType, size } : Props) {
         case TransportTypeValues.Plane:
             icon = <FaPlane size={size} />
             break;
-        case TransportTypeValues.Surf:
-            icon = <MdOutlineSurfing size={size} />
+        case TransportTypeValues.Train:
+            icon = <FaTrainSubway size={size} />
             break;
         case TransportTypeValues.Van:
             icon = <GiSurferVan size={size} />

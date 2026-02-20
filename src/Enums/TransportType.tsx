@@ -5,7 +5,7 @@ export const TransportTypeValues = {
   Car: "Car",
   Cycle: "Cycle",
   Plane: "Plane",
-  Surf: "Surf",
+  Train: "Train",
   Van: "Van",
   Walk: "Walk",
 } as const;

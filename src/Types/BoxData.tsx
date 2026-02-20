@@ -1,4 +1,4 @@
-import type { BoxRowData } from "../Components/Box/BoxRow";
+import type { BoxRowData } from "./BoxRowData";
 
 export type BoxType = "location" | "travel";
 

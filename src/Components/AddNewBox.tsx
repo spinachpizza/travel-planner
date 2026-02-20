@@ -51,13 +51,13 @@ export default function AddNewBox({ onAdd }: Props) {
             }
             {open && 
                 <div className="choice-container" ref={containerRef}>
-                    <div className="choice-button" onClick={addLocation}>
-                        <p>Location Box</p>
-                        <Icon rowType={RowTypeValues.Location} size={75} />
-                    </div>
                     <div className="choice-button" onClick={addTravel}>
                         <p>Travel Box</p>
                         <TransportIcon transportType={TransportTypeValues.Plane} size={75} />
+                    </div>
+                    <div className="choice-button" onClick={addLocation}>
+                        <p>Location Box</p>
+                        <Icon rowType={RowTypeValues.Location} size={75} />
                     </div>
                 </div>
             }

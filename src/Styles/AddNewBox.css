@@ -1,7 +1,7 @@
 .container {
     width: 100px;
     height: 100px;
-    border: 2px solid grey;
+    border: 2px solid #444444;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,15 +12,16 @@
 }
 
 .choice-container {
-    width: 400px;
-    height: 200px;
-    border: 2px solid grey;
+    width: 410px;
+    height: 210px;
     border-radius: 20px;
     margin-top: 10px;
     margin-bottom: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 3px solid #444444;
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7);
     gap: 20px;
 }
 
@@ -28,7 +29,8 @@
 .choice-button {
     width: 170px;
     height: 170px;
-    border: 2px solid grey;
+    border: 1px solid #565656;
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7);
 }
 .button {
     width: 100px;

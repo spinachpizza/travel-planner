@@ -1,9 +1,9 @@
 import { RowTypeValues, type RowType } from "../../Enums/RowType";
 
 import { FaHouseChimney, FaLocationDot, FaRegAddressBook, FaTicket } from "react-icons/fa6";
-import { GiKnifeFork } from "react-icons/gi";
 import { FaCalendarAlt } from "react-icons/fa";
-import { MdAirlineSeatReclineNormal, MdAttachMoney, MdNotes, MdOutlineTimer } from "react-icons/md";
+import { MdAirlineSeatReclineNormal, MdAttachMoney, MdNotes, MdOutlineKitesurfing, MdOutlineTimer } from "react-icons/md";
+import { isCostRow } from "../Box/BoxHelpers";
 
 interface Props {
     rowType : RowType;
@@ -13,32 +13,29 @@ interface Props {
 export default function Icon({ rowType, size = 18 } : Props) {
     let icon: any;
 
+    if (isCostRow(rowType))
+    {
+        return <div className="icon"><MdAttachMoney size={20} /></div>;
+    }
+
     switch (rowType) {
-        case RowTypeValues.AccomodationCost:
         case RowTypeValues.AccomodationName:
             icon = <FaHouseChimney size={size} />;
             break;
-        case RowTypeValues.DateFrom:
-        case RowTypeValues.DateTo:
+        case RowTypeValues.Activities:
+            icon = <MdOutlineKitesurfing size={size} />;
+            break;
+        case RowTypeValues.Dates:
         case RowTypeValues.TravelDate:
             icon = <FaCalendarAlt size={size} />;
             break;
-        case RowTypeValues.FoodCosts:
-            icon = <GiKnifeFork size={size} />;
-            break;
         case RowTypeValues.Location:
-        case RowTypeValues.TravelFrom:
-        case RowTypeValues.TravelTo:
+        case RowTypeValues.TravelLocations:
             icon = <FaLocationDot size={size} />;
             break;
         case RowTypeValues.TravelTime:
-        case RowTypeValues.LeaveTime:
-        case RowTypeValues.ArriveTime:
+        case RowTypeValues.Times:
             icon = <MdOutlineTimer size={20} />
-            break;
-        case RowTypeValues.TravelCost:
-        case RowTypeValues.OtherCosts:
-            icon = <MdAttachMoney size={20} />
             break;
         case RowTypeValues.Notes:
             icon = <MdNotes size={20} />
