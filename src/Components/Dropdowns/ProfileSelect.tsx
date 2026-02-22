@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import ConfirmDialog from "../ConfirmDeletionDialog";
 import { FaTrash } from "react-icons/fa6";
-import { MdAdd, MdEdit } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 
 import '../../Styles/ProfileSelect.css'
 import type { TripProfile } from "../../Types/TripProfile";
+import { IoMdReturnLeft } from "react-icons/io";
 
 type Props = {
   profiles: TripProfile[];
@@ -55,6 +56,17 @@ export default function ProfileSelect({ profiles, activeProfileId, setActiveProf
         setNewName("");
         setIsCreating(true);
     }
+
+    const handleCreateKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            handleCreate();
+        }
+
+        if (e.key === "Escape") {
+            closeAll();
+        }
+    };
 
     const handleCreate = () => {
         const trimmedName = newName.trim();
@@ -155,35 +167,39 @@ export default function ProfileSelect({ profiles, activeProfileId, setActiveProf
 
             {isOpen && (
                 <div className="profile-select-dropdown-container">
+                    
+                    <div className="profile-select-dropdown-rows-container">
+                        {profiles.map(profile => (
+                            <div key={profile.id} onClick={() => {openDropdown(profile.id)}}  className="profile-select-row-container"
+                                onMouseEnter={() => setHoveredProfileId(profile.id)} onMouseLeave={() => setHoveredProfileId(null)}
+                                style={{ background: hoveredProfileId === profile.id && profile.id != editingProfileId ? "#363636" : profile.id === activeProfileId ? "#242424" : "transparent"}}>
+                                
+                                {editingProfileId === profile.id ? (
+                                    <input value={editName} onChange={e => setEditName(e.target.value)} autoFocus
+                                        onClick={e => e.stopPropagation()} className="profile-select-edit-box"
+                                        onKeyDown={(e => handleEditKeyDown(e, profile.id))}/>
+                                    ) : (
+                                    <div className="profile-select-text">
+                                        {profile.name}
+                                    </div>
+                                )}
 
-                    {profiles.map(profile => (
-                        <div key={profile.id} onClick={() => {openDropdown(profile.id)}}  className="profile-select-row-container"
-                            onMouseEnter={() => setHoveredProfileId(profile.id)} onMouseLeave={() => setHoveredProfileId(null)}
-                            style={{ background: hoveredProfileId === profile.id && profile.id != editingProfileId ? "#333" : profile.id === activeProfileId ? "#282828" : "transparent"}}>
-                            
-                            {editingProfileId === profile.id ? (
-                                <input value={editName} onChange={e => setEditName(e.target.value)} autoFocus
-                                    onClick={e => e.stopPropagation()} className="profile-select-edit-box"
-                                    onKeyDown={(e => handleEditKeyDown(e, profile.id))}/>
-                                ) : (
-                                profile.name
-                            )}
+                                {hoveredProfileId === profile.id && editingProfileId !== profile.id && (
+                                    <span className="profile-select-edit-button" onClick={e => {e.stopPropagation(); startEditing(profile);}}>
+                                        <MdEdit size={20} style={{ marginTop: 5 }} />
+                                    </span>
+                                )}
 
-                            {hoveredProfileId === profile.id && editingProfileId !== profile.id && (
-                                <span className="profile-select-edit-button" onClick={e => {e.stopPropagation(); startEditing(profile);}}>
-                                    <MdEdit size={20} style={{ marginTop: 5 }} />
-                                </span>
-                            )}
-
-                            {editingProfileId === profile.id && (
-                            <>
-                                <div className="profile-select-delete-button" onClick={e => {e.stopPropagation(); handleDelete(profile.id);}}>
-                                    <FaTrash size={15} />
-                                </div>
-                            </>
-                            )}
-                        </div>
-                ))}
+                                {editingProfileId === profile.id && (
+                                <>
+                                    <div className="profile-select-delete-button" onClick={e => {e.stopPropagation(); handleDelete(profile.id);}}>
+                                        <FaTrash size={15} />
+                                    </div>
+                                </>
+                                )}
+                            </div>
+                        ))}
+                    </div>
 
                 <ConfirmDialog isOpen={!!deleteProfileId} message="Are you sure you want to delete this trip?"
                     onConfirm={confirmDelete} onCancel={() => setDeleteProfileId(null)} />
@@ -197,9 +213,9 @@ export default function ProfileSelect({ profiles, activeProfileId, setActiveProf
                     </div>
                 ) : (
                     <div style={{ display: "flex", padding: 8, gap: 8, backgroundColor: "#1a1a1a" }}>
-                        <input className="profile-select-add-box" placeholder="Trip name" value={newName} onChange={e => setNewName(e.target.value)} />
+                        <input className="profile-select-add-box" onKeyDown={( e=> handleCreateKeyDown(e))} placeholder="Trip name" value={newName} onChange={e => setNewName(e.target.value)} />
                         <div className="profile-select-add-confirm-button" onClick={handleCreate}>
-                            <MdAdd size={24} />
+                            <IoMdReturnLeft size={20} />
                         </div>
                     </div>
                 )}

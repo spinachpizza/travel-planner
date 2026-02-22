@@ -6,7 +6,7 @@
 }
 
 .profile-select-display-container {
-    height: 32px;
+    height: 40px;
     padding: 0px 10px;
     border: 1px solid grey;
     border-radius: 6px;
@@ -20,7 +20,7 @@
 
 .profile-select-dropdown-container {
     position: absolute;
-    top: 36px;
+    top: 44px;
     width: 100%;
     background-color: #1a1a1a;
     border: 1px solid grey;
@@ -30,24 +30,43 @@
     box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7);
 }
 
+.profile-select-dropdown-rows-container {
+    max-height: 50vh;
+    overflow-y: auto;
+    scrollbar-color: #555 #1a1a1a;
+}
+.profile-select-dropdown-rows-container::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
 .profile-select-row-container {
     position: relative;
-    padding: 5px 30px 5px 20px;
     padding-left: 20px;
     cursor: pointer;
     text-align: start;
+    min-height: 40px;
+}
+
+.profile-select-text {
+    padding: 7px 30px 7px 0px;
 }
 
 .profile-select-edit-box {
     position: relative;
     left: -10px;
-    width: 90%;
-    height: 20px;
-    padding: 4px 6px;
+    top: 4px;
+    width: 75%;
+    height: 23px;
+    font-size: 16px;
+    padding: 3px 6px 3px 10px;
     background-color: #242424;
     border: 1px solid grey;
     border-radius: 4px;
     color: white;
+}
+.profile-select-edit-box:focus {
+    outline: none;
+    border: 1px solid white;
 }
 
 .profile-select-edit-button {
@@ -56,7 +75,7 @@
     justify-content: center;
     border: 1px solid transparent;
     border-radius: 30px;
-    right: 5px;
+    right: 1px;
     width: 30px;
     height: 30px;
     top: 50%;
@@ -79,14 +98,14 @@
 
 .profile-select-delete-button {
     position: absolute;
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     border-radius: 30px;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 8px;
+    right: 1px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;

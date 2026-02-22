@@ -113,20 +113,21 @@
 
 .location-box-input {
     padding: 5px;
-    margin-top: 5px;
+    margin-top: 10px;
     text-align: center;
-    min-width: 10%;
-    width: 10%;
+    min-width: 34%;
+    width: 34%;
     max-width: 60%;
     border: none;
-    border-radius: 0px;
-    border-bottom: 2px solid rgb(71, 68, 68);
+    height: 27px;
+    border-radius: 5px;
+    border: 1px solid rgb(71, 68, 68);
 }
 .location-box-input:focus {
     border: none;
     outline: none;
-    border-radius: 0px;
-    border-bottom: 2px solid white;
+    border-radius: 5px;
+    border: 1px solid white;
 }
 
 .notes-box {
@@ -143,29 +144,6 @@
     border: 1px solid rgb(71, 68, 68);
     border-radius: 5px;
 }
-
-.type-select {
-    margin-left: 10px; 
-    margin-bottom: 10px;
-    width: 120px;
-    height: 40px;
-    padding-left: 5px;
-    padding-top: 10px;
-    padding-bottom: 5px;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-    text-align: center;
-    text-align-last: center;
-    background-color: #242424;
-    outline: none;
-    border: none;
-    border-bottom: 2px solid rgb(71, 68, 68);
-}
-.type-select:focus {
-    outline: none;
-    border-bottom: 2px solid rgb(71, 68, 68);
-}
-
 
 .cost-input-toggle-container {
     display: flex;

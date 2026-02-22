@@ -30,6 +30,7 @@
   width: 430px;
   height: 36px;
   left: calc(50% - 217px);
+  z-index: 101;
 }
 
 .overview-tab {
