@@ -1,4 +1,4 @@
-import { validTransportTypes } from "../../Constants/Constants";
+import { validTransportTypes } from "../../Constants/RowTypeCategoryConstants";
 import type { TransportType } from "../../Enums/TransportType";
 import '../../Styles/Box.css';
 

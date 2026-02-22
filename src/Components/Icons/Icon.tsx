@@ -3,7 +3,7 @@ import { RowTypeValues, type RowType } from "../../Enums/RowType";
 import { FaHouseChimney, FaLocationDot, FaRegAddressBook, FaTicket } from "react-icons/fa6";
 import { FaCalendarAlt } from "react-icons/fa";
 import { MdAirlineSeatReclineNormal, MdAttachMoney, MdNotes, MdOutlineKitesurfing, MdOutlineTimer } from "react-icons/md";
-import { isCostRow } from "../Box/BoxHelpers";
+import { isCostRowType } from "../Box/BoxHelpers";
 
 interface Props {
     rowType : RowType;
@@ -13,7 +13,7 @@ interface Props {
 export default function Icon({ rowType, size = 18 } : Props) {
     let icon: any;
 
-    if (isCostRow(rowType))
+    if (isCostRowType(rowType) || rowType == RowTypeValues.AccomodationCost)
     {
         return <div className="icon"><MdAttachMoney size={20} /></div>;
     }

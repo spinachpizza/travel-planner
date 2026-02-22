@@ -15,19 +15,17 @@ export default function AddNewBox({ onAdd }: Props) {
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-        if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-        ) {
-        setOpen(false);
-        }
-    };
+        const handleClickOutside = (event: MouseEvent) => {
+            if (containerRef.current && !containerRef.current.contains(event.target as Node)) 
+            {
+                setOpen(false);
+            }
+        };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-    };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
     }, []);
 
     const addLocation = () => {

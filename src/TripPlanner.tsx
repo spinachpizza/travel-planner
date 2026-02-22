@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import AddNewBox from './Components/AddNewBox.tsx'
 import type { BoxData, BoxType } from './Types/BoxData.tsx';
-import { defaultLocationRowTypes, defaultTravelRowTypes, validLocationRowTypes, validTravelRowTypes } from './Constants/Constants.tsx';
 import './App.css';
-
 import { DndContext, PointerSensor, useSensor, useSensors, type DragEndEvent, DragOverlay, pointerWithin } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import DownloadButton from './Components/DownloadButton.tsx';
 import { FaHouseChimney } from 'react-icons/fa6';
 import TrashBin from './Components/TrashBin.tsx';
 import SortableBox from './Components/SortableBox.tsx';
-import OverviewTab from './Components/OverviewTab.tsx';
+import OverviewTab from './Components/OverviewTab/OverviewTab.tsx';
 import ProfileSelect from './Components/Dropdowns/ProfileSelect.tsx';
 import type { TripProfile } from './Types/TripProfile.tsx';
 import Box from './Components/Box/Box.tsx';
 import { RowTypeValues } from './Enums/RowType.tsx';
+import { validLocationRowTypes, validTravelRowTypes } from './Constants/ValidRowTypeConstants.ts';
+import { defaultLocationRowTypes, defaultTravelRowTypes } from './Constants/DefaultRowTypeConstants.ts';
 
 export default function TripPlanner() {
     const [profiles, setProfiles] = useState<TripProfile[]>([]);

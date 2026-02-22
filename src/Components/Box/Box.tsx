@@ -1,13 +1,14 @@
 import { type RowType } from "../../Enums/RowType";
 import type { BoxData } from "../../Types/BoxData";
-import type { BoxRowData, TransportRowData } from "../../Types/BoxRowData";
-import { validTravelRowTypes, validLocationRowTypes } from "../../Constants/Constants";
+import type { BoxRowData } from "../../Types/BoxRowData";
 import Arrow from "../Arrow";
 import AddRowDropdown from "../Dropdowns/AddRowDropdown";
 import TransportIcon from "../Icons/TransportIcon";
 import BoxRow from "./BoxRow";
 import type { TransportType } from "../../Enums/TransportType";
 import { CreateRow, isTransportRow, UpdateRowValue } from "./BoxHelpers";
+import type { newValueType } from "../../Types/newValueType";
+import { validLocationRowTypes, validTravelRowTypes } from "../../Constants/ValidRowTypeConstants";
 
 interface Props {
     boxData: BoxData;
@@ -19,11 +20,11 @@ export default function Box({boxData, onChange}: Props) {
 
     const validRowTypes = (boxData.type === "location" ? validLocationRowTypes : validTravelRowTypes)
 
-    const transportRow = rows.find(row => isTransportRow(row.rowType));
-    const selectedTransportType = transportRow == null ? "" : ((transportRow as TransportRowData).value || "Plane") as TransportType;
+    const transportRow = rows.find(row => isTransportRow(row));
+    const selectedTransportType = transportRow == null ? "Plane" : transportRow.value as TransportType;
 
     
-    const updateRow = (id: string, newValue: string | number | { value1: string, value2: string}  | { fromDate: string; toDate: string } | { cost: string; perPerson: boolean }) => {
+    const updateRow = (id: string, { newValue }: { newValue: newValueType }) => {
         const updatedRows = UpdateRowValue(rows, id, newValue);
         onChange({ ...boxData, rows: updatedRows });
     };

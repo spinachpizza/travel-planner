@@ -10,7 +10,7 @@ interface Props {
     onChange: (newValue: string) => void;
 }
 
-export default function InputBox({ textSize, rowType = RowTypeValues.NotSet, value, onChange } : Props) {
+export default function TextInputBox({ textSize, rowType = RowTypeValues.NotSet, value, onChange } : Props) {
 
     const textClass = textSize == "L" ? "large-text" : "default-text";
 

@@ -1,14 +1,10 @@
 import { useState } from "react";
-import '../App.css'
-import type { BoxData } from "../Types/BoxData";
-import TitleAndContent from "./TitleAndContent";
-import { RowTypeValues } from "../Enums/RowType";
-import { FaLocationDot } from "react-icons/fa6";
-import TransportIcon from "./Icons/TransportIcon";
-import type { TransportType } from "../Enums/TransportType";
+import '../../App.css'
+import type { BoxData } from "../../Types/BoxData";
+import TitleAndContent from "../TitleAndContent";
 import { HiOutlineBars2 } from "react-icons/hi2";
-import { isCostRow, isTransportRow } from "./Box/BoxHelpers";
-import type { CostRowData, DateRowData, TextRowData, TransportRowData } from "../Types/BoxRowData";
+import TimeLine from "./TripTimeline";
+import { DateFrom, DateTo, TotalCost, TripLength } from "./OverviewTabHelpers";
 
 interface Props {
     boxes: BoxData[];
@@ -83,105 +79,4 @@ export default function OverviewTab({ boxes }: Props) {
             
         </div>
     )
-}
-
-function TimeLine({ boxes }: Props)
-{
-    return (
-        <>
-            {boxes.map(box => (
-                <div key={box.id} style={{ flexShrink: 0, height: 150, maxHeight: 150, width: 75, display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", paddingTop: 50 }}>
-                    {box.type == "location" &&
-                        <>
-                            <FaLocationDot size={20} />
-                            <p>{(box.rows.find(row => row.rowType == RowTypeValues.Location) as TextRowData)?.value ?? ""}</p>
-                        </>
-                    }
-                    {box.type == "travel" && 
-                        <div style={{ marginTop: 20 }}>
-                            <TransportIcon transportType={(box.rows.find(row => isTransportRow(row.rowType)) as TransportRowData)?.value ?? "Plane" as TransportType} size={24} />
-                        </div>
-                    }
-                </div>
-            ))}
-        </>
-    )
-}
-
-function TotalCost({ boxes, totalPeople}: { boxes: BoxData[], totalPeople: number }) {
-
-    const rows = boxes.flatMap(box => box.rows)
-
-    const totalCost = rows
-        .filter(row => isCostRow(row.rowType))
-        .reduce((sum, row) => { 
-            const n = (row as CostRowData).perPerson ? Number((row as CostRowData).cost) * totalPeople: Number((row as CostRowData).cost); 
-            return isNaN(n) ? sum : sum + n;
-        }, 0);
-    
-    return totalCost;
-}
-
-function DateFrom({ boxes }: Props) {
-
-    const dateFromBoxes = boxes
-        .flatMap(box => box.rows)
-        .filter(row => row.rowType == RowTypeValues.Dates || row.rowType == RowTypeValues.TravelDate)
-
-    const firstDateFrom = dateFromBoxes
-        .find(row => (row as DateRowData).fromDate != null)
-
-    if (!firstDateFrom) { 
-        return null; 
-    } 
-    
-    return (firstDateFrom as DateRowData).fromDate;
-}
-
-function DateTo({ boxes }: Props) {
-
-    const dateToBoxes = [...boxes]
-        .reverse()
-        .flatMap(box => box.rows)
-        .filter(row => row.rowType == RowTypeValues.Dates || row.rowType == RowTypeValues.TravelDate)
-
-    const lastDateTo = dateToBoxes
-        .find(row => (row as DateRowData).toDate != null)
-
-    if (!lastDateTo) { 
-        return null; 
-    } 
-    
-    return (lastDateTo as DateRowData).toDate;
-}
-
-function TripLength({ boxes }: Props) {
-
-    const dateFrom = DateFrom({boxes});
-    const dateTo = DateTo({boxes});
-
-    if (!dateFrom || !dateTo)
-    {
-        return null;
-    }
-
-    const fromDate = parseDate(dateFrom);
-    const toDate = parseDate(dateTo);
-
-    if (!fromDate || !toDate)
-    {
-        return null;
-    }
-
-    const days = (toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24);
-    return days.toString() + " days";
-}
-
-function parseDate(value: string | null | undefined): Date | null { 
-    if (!value) {
-        return null; 
-    }
-    
-    const d = new Date(value);
-    return isNaN(d.getTime()) ? null : d;
 }

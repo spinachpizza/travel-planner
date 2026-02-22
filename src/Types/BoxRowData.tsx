@@ -30,12 +30,20 @@ export interface TwoTextRowData extends BaseRowData {
 
 export interface CostRowData extends BaseRowData {
     rowType:
-        | typeof RowTypeValues.AccomodationCost
         | typeof RowTypeValues.FoodCosts
         | typeof RowTypeValues.OtherCosts
         | typeof RowTypeValues.TravelCost;
     cost: string;
     perPerson: boolean;
+}
+
+export interface AccomodationCostRowData extends BaseRowData {
+    rowType:
+        | typeof RowTypeValues.AccomodationCost
+    cost: string;
+    perPerson: boolean;
+    perNight: boolean;
+    nights: string;
 }
 
 export interface DateRowData extends BaseRowData {
@@ -56,5 +64,6 @@ export type BoxRowData =
     | TextRowData
     | TwoTextRowData
     | CostRowData
+    | AccomodationCostRowData
     | DateRowData
     | TransportRowData

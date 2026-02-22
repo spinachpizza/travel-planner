@@ -154,6 +154,8 @@
     padding-bottom: 5px;
     font-family: Arial, sans-serif;
     font-size: 18px;
+    text-align: center;
+    text-align-last: center;
     background-color: #242424;
     outline: none;
     border: none;
