@@ -30,7 +30,7 @@ export function DateFrom({ boxes }: { boxes: BoxData[] }) {
         .filter(row => isDateRow(row))
 
     const firstDateFrom = dateFromBoxes
-        .find(row => row.fromDate != null)
+        .find(row => row.fromDate)
 
     if (!firstDateFrom) { 
         return null; 
@@ -47,7 +47,7 @@ export function DateTo({ boxes }: { boxes: BoxData[] }) {
         .filter(row => isDateRow(row))
 
     const lastDateTo = dateToBoxes
-        .find(row => row.toDate != null)
+        .find(row => row.toDate)
 
     if (!lastDateTo) { 
         return null; 
