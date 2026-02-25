@@ -9,10 +9,11 @@ import Box from "./Box/Box";
 interface Props {
     box: BoxData;
     onChange: (updatedBox: BoxData) => void;
-    activeId: string | null
+    activeId: string | null;
+    numberOfPeople: number;
 }
 
-export default function SortableBox({ box, onChange, activeId }: Props) {
+export default function SortableBox({ box, onChange, activeId, numberOfPeople}: Props) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
         id: box.id,
     });
@@ -28,18 +29,14 @@ export default function SortableBox({ box, onChange, activeId }: Props) {
 
     const horizontal = box.type === "location" ? 285 : 470; //525 575
     const vertical = box.type === "location" 
-        ? 35
-        : box.rows.length > 2 
-            ? 58 
-            : box.rows.length == 1
-                ? 112
-                : 82;
+        ? 40
+        : 65;
 
   	return (
     	<div className="box" ref={setNodeRef} style={style}>
 			<HiOutlineBars3 {...attributes} {...listeners} className="drag-icon" style={{ top: vertical, left: horizontal }} title="Drag to reorder" />
 
-            <Box boxData={box} onChange={onChange} />
+            <Box boxData={box} onChange={onChange} numberOfPeople={numberOfPeople} />
 		</div>
   	);
 }

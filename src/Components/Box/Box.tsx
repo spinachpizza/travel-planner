@@ -1,21 +1,23 @@
-import { type RowType } from "../../Enums/RowType";
+import { RowTypeValues, type RowType } from "../../Enums/RowType";
 import type { BoxData } from "../../Types/BoxData";
-import type { BoxRowData } from "../../Types/BoxRowData";
+import type { BoxRowData, TextRowData } from "../../Types/BoxRowData";
 import Arrow from "../Arrow";
 import AddRowDropdown from "../Dropdowns/AddRowDropdown";
 import TransportIcon from "../Icons/TransportIcon";
 import BoxRow from "./BoxRow";
 import type { TransportType } from "../../Enums/TransportType";
-import { CreateRow, isTransportRow, UpdateRowValue } from "./BoxHelpers";
+import { CreateRow, isDateRow, isTextRow, isTransportRow, UpdateRowValue } from "./BoxHelpers";
 import type { newValueType } from "../../Types/newValueType";
 import { validLocationRowTypes, validTravelRowTypes } from "../../Constants/ValidRowTypeConstants";
+import GoToAccomodationBookingButton from "../Buttons/GoToAccomodationBookingButton";
 
 interface Props {
     boxData: BoxData;
     onChange: (updatedBox: BoxData) => void;
+    numberOfPeople: number;
 }
 
-export default function Box({boxData, onChange}: Props) {
+export default function Box({boxData, onChange, numberOfPeople}: Props) {
     const rows = boxData.rows as BoxRowData[];
 
     const validRowTypes = (boxData.type === "location" ? validLocationRowTypes : validTravelRowTypes)
@@ -49,7 +51,7 @@ export default function Box({boxData, onChange}: Props) {
 
             {boxData.type === "travel" && 
                 <>
-                    <div style={{width:150, display: "flex", justifyContent: "flex-end"}}>
+                    <div style={{width:150, height: "100%", display: "flex", justifyContent: "flex-end", alignItems: "center"}}>
                         <div style={{ marginRight: 20 }} >
                             <TransportIcon transportType={selectedTransportType} size={75} />
                         </div>
@@ -57,6 +59,16 @@ export default function Box({boxData, onChange}: Props) {
                     <div className="arrow-wrapper">
                         <Arrow />
                     </div>
+                </>
+            }
+
+            {boxData.type === "location" &&
+                <>
+                    <GoToAccomodationBookingButton
+                        location={(rows.find(row => isTextRow(row) && row.rowType == RowTypeValues.Location) as TextRowData).value}
+                        dateFrom={rows.find(row => isDateRow(row))?.fromDate}
+                        dateTo={rows.find(row => isDateRow(row))?.toDate}
+                        numberOfPeople={numberOfPeople} />
                 </>
             }
 

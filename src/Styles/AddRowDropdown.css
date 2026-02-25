@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #242424; 
+    border: 1px solid #1a1a1a; 
     width: 35px;
     height: 35px;
     cursor: pointer;
@@ -19,7 +19,7 @@
     position: absolute;
     top: 30px;
     background-color: #1a1a1a;
-    border: 1px solid #ccc;
+    border: 1px solid #1a1a1a;
     margin-top: 1px;
     margin-left: -200px;
     border-radius: 15px;

@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import AddNewBox from './Components/AddNewBox.tsx'
 import type { BoxData, BoxType } from './Types/BoxData.tsx';
 import './App.css';
 import { DndContext, PointerSensor, useSensor, useSensors, type DragEndEvent, DragOverlay, pointerWithin } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import DownloadButton from './Components/DownloadButton.tsx';
+import DownloadButton from './Components/Buttons/DownloadButton.tsx';
 import { FaHouseChimney } from 'react-icons/fa6';
 import TrashBin from './Components/TrashBin.tsx';
 import SortableBox from './Components/SortableBox.tsx';
@@ -15,6 +14,7 @@ import Box from './Components/Box/Box.tsx';
 import { RowTypeValues } from './Enums/RowType.tsx';
 import { validLocationRowTypes, validTravelRowTypes } from './Constants/ValidRowTypeConstants.ts';
 import { defaultLocationRowTypes, defaultTravelRowTypes } from './Constants/DefaultRowTypeConstants.ts';
+import AddNewBox from './Components/Buttons/AddNewBox.tsx';
 
 export default function TripPlanner() {
     const [profiles, setProfiles] = useState<TripProfile[]>([]);
@@ -91,18 +91,30 @@ export default function TripPlanner() {
         if (!activeProfileId) return;
 
         setProfiles(prev =>
-        prev.map(p =>
-            p.id === activeProfileId
-            ? {
-                ...p,
-                boxes: p.boxes.map(b =>
-                    b.id === updatedBox.id ? updatedBox : b
-                )
-                }
-            : p
-        )
+            prev.map(p =>
+                p.id === activeProfileId
+                ? {
+                    ...p,
+                    boxes: p.boxes.map(b =>
+                        b.id === updatedBox.id ? updatedBox : b
+                    )
+                    }
+                : p
+            )
         );
     };
+
+    const updateNumberOfPeople = (newValue: number) => {
+        if (!activeProfileId) return;
+
+        setProfiles(prev =>
+            prev.map(p =>
+                p.id === activeProfileId
+                    ? { ...p, numberOfPeople: newValue }
+                    : p
+            )
+        );
+    }
 
     const sensors = useSensors(useSensor(PointerSensor));
     const plannerRef = useRef<HTMLDivElement>(null);
@@ -135,6 +147,8 @@ export default function TripPlanner() {
         );
     };
 
+    const numberOfPeople = profiles.find(profile => profile.id === activeProfileId)?.numberOfPeople ?? 1;
+
     return (
         <>
             <div className="main-container sunken">
@@ -143,7 +157,7 @@ export default function TripPlanner() {
                         <ProfileSelect profiles={profiles} activeProfileId={activeProfileId} setActiveProfileId={setActiveProfileId}
                             setProfiles={setProfiles} />
                     </div>
-                    <div style={{ width: 300, height: 120, border: "2px solid #444444", borderRadius: 20, boxShadow: "3px 3px 12px rgba(0, 0, 0, 0.7)", marginBottom: 10 }}>
+                    <div style={{ width: 300, height: 120, background: "#1a1a1a", border: "2px solid #242424", borderRadius: 20, boxShadow: "3px 3px 12px rgba(0, 0, 0, 0.7)", marginBottom: 10 }}>
                         <p style={{ fontSize: 30, fontWeight: "bold", marginTop: 10 }}>Home</p>
                         <FaHouseChimney size={50} style={{ marginTop: -30 }} />
                     </div>
@@ -154,7 +168,7 @@ export default function TripPlanner() {
                     <SortableContext items={boxes.map(b => b.id)} strategy={verticalListSortingStrategy}>
                         <div className="main-container" ref={plannerRef}>
                         {boxes.map(box => (
-                            <SortableBox key={box.id} box={box} onChange={updateBox} activeId={activeId} />
+                            <SortableBox key={box.id} box={box} onChange={updateBox} activeId={activeId} numberOfPeople={numberOfPeople} />
                         ))}
                         </div>
                         <AddNewBox onAdd={addBox} />
@@ -167,14 +181,14 @@ export default function TripPlanner() {
                             return (
                             <div style={{ display: "flex", justifyContent: "center", width: 1000, background: "none", padding: 8, borderRadius: 8,         
                                 opacity: 0.9, pointerEvents: "none" }}>
-                                <Box boxData={box} onChange={updateBox} />
+                                <Box boxData={box} onChange={updateBox} numberOfPeople={numberOfPeople} />
                             </div>
                             );
                         })() : null}
                     </DragOverlay>
                     <TrashBin active={!!activeId} />
                 </DndContext>
-                <OverviewTab boxes={boxes} />
+                <OverviewTab boxes={boxes} numberOfPeople={numberOfPeople} onChange={(value) => updateNumberOfPeople(value)} />
             </div>
             <DownloadButton captureRef={plannerRef} />
         </>

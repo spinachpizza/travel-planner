@@ -10,13 +10,13 @@ interface Props {
     onChange: ({ newValue }: { newValue: newValueType }) => void;
 }
 
-export default function BoxRow({ row, onChange }: { row: BoxRowData; onChange: Props["onChange"] }) {
+export default function BoxRow({ row, onChange }: Props) {
 
     if (row.rowType === RowTypeValues.Location)
     {
         return (
             <>
-                <div className="box-row" style={{ justifyContent: "center" }}>
+                <div className="box-row">
                     <InputBox row={row} onChange={onChange} />
                 </div>
             </>
@@ -27,7 +27,7 @@ export default function BoxRow({ row, onChange }: { row: BoxRowData; onChange: P
     {
         return (
             <>
-                <div className="box-row" style={{ justifyContent: "center" }}>
+                <div className="box-row">
                     <InputBox row={row} onChange={onChange} />
                 </div>
             </>

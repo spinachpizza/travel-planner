@@ -75,9 +75,10 @@ export default function ProfileSelect({ profiles, activeProfileId, setActiveProf
         if (!validateNewName(profiles, trimmedName)) return;
 
         const profile: TripProfile = {
-        id: crypto.randomUUID(),
-        name: trimmedName,
-        boxes: []
+            id: crypto.randomUUID(),
+            name: trimmedName,
+            numberOfPeople: 1,
+            boxes: []
         };
 
         setProfiles(prev => [...prev, profile]);
@@ -204,11 +205,10 @@ export default function ProfileSelect({ profiles, activeProfileId, setActiveProf
                 <ConfirmDialog isOpen={!!deleteProfileId} message="Are you sure you want to delete this trip?"
                     onConfirm={confirmDelete} onCancel={() => setDeleteProfileId(null)} />
 
-                <div style={{ borderTop: "1px solid grey" }} />
+                <div style={{ borderTop: "1px solid #363636"}} />
 
                 {!isCreating ? (
-                    <div onClick={startCreating} className="profile-select-add-button" onMouseEnter={e => (e.currentTarget.style.background = "#333")}
-                        onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
+                    <div onClick={startCreating} className="profile-select-add-button">
                         Add New trip
                     </div>
                 ) : (
@@ -228,6 +228,7 @@ export default function ProfileSelect({ profiles, activeProfileId, setActiveProf
 const createDefaultProfile = (): TripProfile => ({
     id: "default",
     name: "My Trip",
+    numberOfPeople: 1,
     boxes: []
 });
 

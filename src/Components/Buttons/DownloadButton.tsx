@@ -1,7 +1,7 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { MdDownload } from "react-icons/md";
-import '.././App.css'
+import '../../App.css'
 
 interface Props {
   captureRef: React.RefObject<HTMLDivElement | null>;

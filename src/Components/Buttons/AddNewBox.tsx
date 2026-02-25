@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { RowTypeValues } from '../Enums/RowType'
-import { TransportTypeValues } from '../Enums/TransportType'
-import Icon from './Icons/Icon'
-import '../Styles/AddNewBox.css'
-import TransportIcon from './Icons/TransportIcon'
+import '../../Styles/AddNewBox.css'
 import { FaPlus } from 'react-icons/fa6'
+import Icon from '../Icons/Icon';
+import { TransportTypeValues } from '../../Enums/TransportType';
+import { RowTypeValues } from '../../Enums/RowType';
+import TransportIcon from '../Icons/TransportIcon';
 
 type Props = {
     onAdd: (type: "location" | "travel") => void;
